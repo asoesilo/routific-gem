@@ -1,11 +1,38 @@
 require_relative './helper/spec_helper'
 
 describe Routific do
-  describe "instance objects" do
+  let(:endpoints) { %w(vrp vrp-long pdp pdp-long) }
+
+  describe "instance methods" do
     subject(:routific) { Routific.new(ENV["API_KEY"]) }
 
     it "has token" do
       expect(routific.token).to eq(ENV["API_KEY"])
+    end
+
+    describe '#endpoint' do
+      it 'returns the default endpoint' do
+        expect(routific.endpoint).to eq(:vrp)
+      end
+    end
+
+    describe '#endpoint=' do
+      around do |example|
+        old_endpoint = routific.endpoint
+        example.run
+        routific.endpoint = old_endpoint
+      end
+
+      it 'changes the endpoint if a valid endpoint is given' do
+        endpoints.each do |endpoint|
+          routific.endpoint = endpoint
+          expect(routific.endpoint).to eq(endpoint)
+        end
+      end
+
+      it 'raises an error if an invalid endpoint is given' do
+        expect { routific.endpoint = 'invalid' }.to raise_error(Routific::InvalidEndpoint)
+      end
     end
 
     describe "#visits" do
@@ -88,6 +115,38 @@ describe Routific do
   end
 
   describe "class methods" do
+    describe '.endpoint' do
+      it 'returns the default endpoint' do
+        expect(Routific.endpoint).to eq(:vrp)
+      end
+    end
+
+    describe '.endpoint=' do
+      around do |example|
+        old_endpoint = Routific.endpoint
+        example.run
+        Routific.endpoint = old_endpoint
+      end
+
+      it 'changes the endpoint if a valid endpoint is given' do
+        endpoints.each do |endpoint|
+          Routific.endpoint = endpoint
+          expect(Routific.endpoint).to eq(endpoint)
+        end
+      end
+
+      it 'raises an error if an invalid endpoint is given' do
+        expect { Routific.endpoint = 'invalid' }.to raise_error(Routific::InvalidEndpoint)
+      end
+
+      it 'changes the endpoint for all new instances' do
+        endpoints.each do |endpoint|
+          Routific.endpoint = endpoint
+          expect(Routific.new(ENV["API_KEY"]).endpoint).to eq(endpoint)
+        end
+      end
+    end
+
     describe ".setToken" do
       before do
         Routific.setToken(ENV["API_KEY"])

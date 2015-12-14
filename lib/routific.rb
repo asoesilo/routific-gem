@@ -9,7 +9,14 @@ require_relative './routific/way_point'
 
 # Main class of this gem
 class Routific
-  attr_reader :token, :visits, :fleet
+  Error           = Class.new(StandardError)
+  InvalidEndpoint = Class.new(Error)
+
+  ENDPOINTS = %i(vrp vrp-long pdp pdp-long)
+
+  @@endpoint = ENDPOINTS.first
+
+  attr_reader :token, :visits, :fleet, :endpoint
 
   # Constructor
   # token: Access token for Routific API
@@ -17,6 +24,12 @@ class Routific
     @token = token
     @visits = {}
     @fleet = {}
+    @endpoint = @@endpoint
+  end
+
+  def endpoint=(value)
+    raise InvalidEndpoint unless ENDPOINTS.include?(value.to_sym)
+    @endpoint = value
   end
 
   # Sets a visit for the specified location using the specified parameters
@@ -40,7 +53,7 @@ class Routific
       fleet: fleet
     }
 
-    Routific.getRoute(data, token)
+    Routific.getRoute(data, token, endpoint)
   end
 
   class << self
@@ -53,10 +66,19 @@ class Routific
       @@token
     end
 
+    def endpoint
+      @@endpoint
+    end
+
+    def endpoint=(value)
+      raise InvalidEndpoint unless ENDPOINTS.include?(value.to_sym)
+      @@endpoint = value
+    end
+
     # Returns the route using the specified access token, visits and fleet information
     # If no access token is provided, the default access token previously set is used
     # If the default access token either is nil or has not been set, an ArgumentError is raised
-    def getRoute(data, token = @@token)
+    def getRoute(data, token = @@token, endpoint = @@endpoint)
       if token.nil?
         raise ArgumentError, "access token must be set"
       end
@@ -66,7 +88,7 @@ class Routific
 
       begin
         # Sends HTTP request to Routific API server
-        response = RestClient.post('https://api.routific.com/v1/vrp',
+        response = RestClient.post("https://api.routific.com/v1/#{endpoint}",
           data.to_json,
           'Authorization' => prefixed_token,
           content_type: :json,
