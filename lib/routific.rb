@@ -1,5 +1,6 @@
 require 'rest-client'
 require 'json'
+require 'logger'
 
 require_relative './routific/location'
 require_relative './routific/visit'
@@ -11,6 +12,7 @@ require_relative './routific/job'
 # Main class of this gem
 class Routific
   Error           = Class.new(StandardError)
+  RequestError    = Class.new(Error)
   InvalidEndpoint = Class.new(Error)
 
   ENDPOINTS = [:vrp, :'vrp-long', :pdp, :'pdp-long']
@@ -60,11 +62,28 @@ class Routific
   end
 
   class << self
-    attr_reader :token, :endpoint
+    attr_reader :token, :endpoint, :log_requests, :raise_on_exception
 
     # Sets the default access token to use
     def setToken(token)
       @token = token
+    end
+
+    def setLogger(logger)
+      @logger = logger
+    end
+
+    def setLogRequests(value)
+      @log_requests = value
+    end
+
+    # should be the default, applications can decide to rescue exceptions
+    def setRaiseOnException(flag)
+      @raise_on_exception = flag
+    end
+
+    def logger
+      @logger ||= Logger.new($stdout)
     end
 
     def endpoint=(value)
@@ -104,6 +123,11 @@ class Routific
     private
 
     def request(options)
+      args = build_request_arguments(options)
+      do_request(args)
+    end
+
+    def build_request_arguments(options)
       path   = options.fetch :path
       method = options.fetch :method
       token  = options.fetch :token
@@ -132,19 +156,28 @@ class Routific
           accept:        :json
         }
       }
+
       if method.to_sym == :post && data
         args[:payload] = data
       end
+      args
+    end
 
+    def do_request(args)
       begin
         response = RestClient::Request.execute args
-      rescue => e
-        puts e
-        errorResponse = JSON.parse e.response.body
-        puts "Received HTTP #{e.message}: #{errorResponse["error"]}"
-        nil
-      else
+
+        logger.info(response) if log_requests
         JSON.parse(response)
+      rescue => error
+        if raise_on_exception
+          raise RequestError.new(error)
+        else
+          logger.error(error)
+          errorResponse = JSON.parse error.response.body
+          logger.error("Received HTTP #{error.message}: #{errorResponse["error"]}")
+          nil
+        end
       end
     end
 

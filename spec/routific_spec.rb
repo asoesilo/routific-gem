@@ -234,6 +234,22 @@ describe Routific do
       end
     end
 
+    describe ".logger" do
+      after :each do
+        Routific.setLogger(nil)
+      end
+
+      it "uses the logger set by setLogger if set" do
+        logger = Logger.new(StringIO.new)
+        Routific.setLogger(logger)
+        expect(Routific.logger).to eq(logger)
+      end
+
+      it "uses the default logger if not set by setLogger" do
+        expect(Routific.logger.instance_variable_get("@logdev").dev).to eq(STDOUT)
+      end
+    end
+
     describe ".getRoute" do
       it_behaves_like 'making a valid request' do
         let(:request)       { Routific.getRoute(route_data) }
@@ -285,6 +301,51 @@ describe Routific do
                 end
                 Factory::JOB_API_RESPONSE['output'].to_json
               end
+              Routific.getRoute(route_data)
+            end
+          end
+
+          describe "errors during the request" do
+            let(:log_output) {StringIO.new}
+
+            before(:each) do
+              error = StandardError.new
+              allow(error).to receive(:response).and_return(double("error response double", body: '{"error": "error_text"}'))
+              expect(RestClient::Request).to receive(:execute).and_raise(error)
+            end
+
+            it "raises an exception when raise_on_exceptions is true" do
+              Routific.setRaiseOnException(true)
+              expect{ Routific.getRoute(route_data) }.to raise_error(Routific::RequestError)
+            end
+
+            it "write to the log, but does not raise an exception when raise_on_exceptions is false" do
+              Routific.setLogger(Logger.new(log_output))
+              Routific.setRaiseOnException(false)
+              
+              expect{ Routific.getRoute(route_data) }.not_to raise_error
+              log_output.rewind
+              expect(log_output.read).to match /error_text/i
+            end
+          end
+
+          describe "request logging" do
+            after :each do
+              Routific.setLogRequests(nil)
+            end
+
+            it "does not log requests by default" do
+              expect(Routific.logger).to_not receive(:info)
+              Routific.getRoute(route_data)
+            end
+
+            it "when setLogRequests is set, it logs to the logger"  do
+              Routific.setLogRequests(true)
+              response = Factory::JOB_API_RESPONSE['output'].to_json
+              
+              expect(Routific.logger).to receive(:info).with response
+              expect(RestClient::Request).to receive(:execute).and_return(response)
+
               Routific.getRoute(route_data)
             end
           end
