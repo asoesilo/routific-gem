@@ -18,7 +18,7 @@ Remember to require it and instantiate it with your token before using it
 
 ```ruby
 require 'routific'
-routific = Routific.new(--API_KEY--)
+routific = Routific.new("INSERT API KEY")
 ```
 
 ### Instance methods
@@ -93,7 +93,7 @@ Example 1:
 ```ruby
 require 'routific'
 
-routific = Routific.new(--API_KEY--)
+routific = Routific.new("INSERT API KEY")
 
 routific.setVisit("order_1", {
   "start" => "9:00",
@@ -129,7 +129,7 @@ Example 2:
 ```ruby
 require 'routific'
 
-Routific.setToken(--API_KEY--)
+Routific.setToken("INSERT API KEY")
 
 visits = {
   "order_1" => {
