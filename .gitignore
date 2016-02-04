@@ -3,3 +3,5 @@
 
 # Ignore the gem builds
 routific-*.gem
+
+Gemfile.lock

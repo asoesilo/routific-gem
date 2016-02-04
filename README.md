@@ -18,7 +18,7 @@ Remember to require it and instantiate it with your token before using it
 
 ```ruby
 require 'routific'
-routific = Routific.new(--API_KEY--)
+routific = Routific.new("INSERT API KEY")
 ```
 
 ### Instance methods
@@ -74,6 +74,18 @@ Returns the route using the previously provided network, visits and fleet inform
 
 Sets the default access token to use
 
+`Routific.setRaiseOnException( boolean )`
+
+Sets whether errors in the Api request and response parsing should throw exceptions or fail silently. Defaults to false.
+
+`Routific.setLogRequests( logger )`
+
+Sets the ruby Logger to be used to log errors, request logs etc. If no logger is explicitly set, logs are sent to STDOUT
+
+`Routific.setLogRequests( boolean )`
+
+Sets whether the result of requests should be logged. Defaults to false.
+
 `Routific.getRoute( id, [params] )`
 
 Returns the route using the specified access token, network, visits and fleet information
@@ -93,7 +105,7 @@ Example 1:
 ```ruby
 require 'routific'
 
-routific = Routific.new(--API_KEY--)
+routific = Routific.new("INSERT API KEY")
 
 routific.setVisit("order_1", {
   "start" => "9:00",
@@ -129,7 +141,7 @@ Example 2:
 ```ruby
 require 'routific'
 
-Routific.setToken(--API_KEY--)
+Routific.setToken("INSERT API KEY")
 
 visits = {
   "order_1" => {
