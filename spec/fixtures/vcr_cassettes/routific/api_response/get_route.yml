@@ -1,0 +1,62 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.routific.com/v1/vrp
+    body:
+      encoding: UTF-8
+      string: '{"visits":{"order_1":{"start":"9:00","end":"12:00","duration":10,"location":{"name":"6800
+        Cambie","lat":49.227107,"lng":-123.1163085}}},"fleet":{"vehicle_1":{"start_location":{"name":"800
+        Kingsway","lat":49.2553636,"lng":-123.0873365},"end_location":{"name":"800
+        Kingsway","lat":49.2553636,"lng":-123.0873365},"shift_start":"8:00","shift_end":"12:00"}},"options":{}}'
+    headers:
+      Accept:
+      - application/json
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJfaWQiOiI1M2NmZjVkOWI4OTUxNTA4MDA5NzNjNTYiLCJpYXQiOjE0MDYxMzc4MTd9.yOX4fklzcG8O82fNWkDJ_slCDazctjGCDGYgvUqXhzw
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '366'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Allow-Headers:
+      - Content-Type, Authorization, Routific-App
+      Access-Control-Allow-Methods:
+      - GET,PUT,POST,DELETE,OPTIONS
+      Access-Control-Allow-Origin:
+      - "*"
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Tue, 16 Aug 2016 13:26:55 GMT
+      Server:
+      - nginx/1.8.1
+      X-Request-Id:
+      - b6166e4c-307e-4d11-b7cc-39cc9c745490
+      X-Response-Time:
+      - 169 ms
+      Content-Length:
+      - '215'
+      Connection:
+      - keep-alive
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAAAAAAAAA4WOQQrCMBBFryKzLpIKas3WpUcQKbEddSBNIJNUpPTuTkWr
+        aMFsQv4j/78OOJqYGDRwqipkhgyij8aWMZgW5aIGQefLuVrJWb8o1RafTGXg
+        UlMmxxharB/B++GStRmwtymSd6A7aPFClfzOQe87sL4yA5FGkRhZKV4hiszI
+        nRnGoFBqtiN35qu5CTYhUDvYPlRAFXq5gD777vWhxiCLv32roXBrmiPhRN1G
+        KyXxiRzx5SPN1cTIWx5dPTH1R11a19Af+v4OXAhNg5UBAAA=
+    http_version: 
+  recorded_at: Tue, 16 Aug 2016 13:26:54 GMT
+recorded_with: VCR 3.0.3

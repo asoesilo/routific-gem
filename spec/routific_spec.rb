@@ -106,8 +106,10 @@ describe Routific do
       end
 
       it "returns a Route instance" do
-        route = routific.getRoute()
-        expect(route).to be_instance_of(RoutificApi::Route)
+        VCR.use_cassette 'routific/api_response/get_route' do
+          route = routific.getRoute()
+          expect(route).to be_instance_of(RoutificApi::Route)
+        end
       end
 
       it "attaches optional data hash" do
@@ -121,8 +123,10 @@ describe Routific do
           options: routific.options
         }
 
-        route = routific.getRoute()
-        expect(route).to be_instance_of(RoutificApi::Route)
+        VCR.use_cassette 'routific/api_response/with_data_hash' do
+          route = routific.getRoute()
+          expect(route).to be_instance_of(RoutificApi::Route)
+        end
       end
     end
   end
@@ -187,7 +191,9 @@ describe Routific do
           end
 
           it "returns a Route instance" do
-            expect(Routific.getRoute(@data)).to be_instance_of(RoutificApi::Route)
+            VCR.use_cassette 'routific/api_response' do
+              expect(Routific.getRoute(@data)).to be_instance_of(RoutificApi::Route)
+            end
           end
         end
 
@@ -197,13 +203,17 @@ describe Routific do
           end
 
           it "returns a Route instance" do
-            expect(Routific.getRoute(@data, ENV["API_KEY"])).to be_instance_of(RoutificApi::Route)
+            VCR.use_cassette 'routific/api_response' do
+              expect(Routific.getRoute(@data, ENV["API_KEY"])).to be_instance_of(RoutificApi::Route)
+            end
           end
 
           it "still successful even if missing prefix 'bearer ' in key" do
             key = ENV["API_KEY"].sub /bearer /, ''
             expect(/bearer /.match(key).nil?).to be true
-            expect(Routific.getRoute(@data, key)).to be_instance_of(RoutificApi::Route)
+            VCR.use_cassette 'routific/api_response' do
+              expect(Routific.getRoute(@data, key)).to be_instance_of(RoutificApi::Route)
+            end
           end
         end
       end
