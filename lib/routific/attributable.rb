@@ -2,7 +2,7 @@ module RoutificApi
   class Attributable
     include RoutificApi::Jsonable
 
-    ATTRS = %i(values collections)
+    ATTRS = %i(values object_values collections)
     def initialize(params)
       ensure_attrs_set
       set_attrs(params)
@@ -11,7 +11,7 @@ module RoutificApi
     private
 
     def attrs
-      values + collections
+      values + object_values + collections
     end
 
     def ensure_attrs_set

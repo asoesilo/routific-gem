@@ -10,7 +10,9 @@ module RoutificApi
     private
 
     def set_json(data, attr)
-      collections.include?(attr) ? set_json_collection(data, attr) : set_json_value(data, attr)
+      return set_json_collection(data, attr) if collections.include?(attr)
+      return set_object_value(data, attr) if object_values.include?(attr)
+      set_json_value(data, attr)
     end
 
     def set_json_value(data, attr)
@@ -20,6 +22,10 @@ module RoutificApi
     def set_json_collection(data, attr)
       data[attr.to_s] = self.send(attr)
         .map(&:as_json)
+    end
+
+    def set_object_value(data, attr)
+      data[attr.to_s] = self.send(attr).as_json
     end
 
     def add_attr_if_exists(attr)

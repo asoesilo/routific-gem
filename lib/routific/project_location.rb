@@ -1,15 +1,15 @@
 module RoutificApi
-  class Project < Attributable
+  class ProjectLocation < Attributable
     def values
-      %i(id name date)
+      %i(address)
     end
 
     def object_values
-      []
+      %i(coords)
     end
 
     def collections
-      %i(drivers stops settings)
+      []
     end
   end
 end

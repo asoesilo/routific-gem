@@ -6,6 +6,7 @@ describe RoutificApi::Attributable do
 
   class AttributableSubclass < RoutificApi::Attributable
     def values; %i(val_attr); end
+    def object_values; %i(obj_val_attr); end
     def collections; %i(collection_attr); end
   end
 
@@ -32,7 +33,7 @@ describe RoutificApi::Attributable do
 
   context "attributes not set" do
     it "raises a missing attribute error" do
-      %i(values collections).each do |meth|
+      %i(values object_values collections).each do |meth|
         AttributableSubclass.class_eval("undef #{ meth }")
         expect { subject }.to raise_error(MissingAttributeError)
       end

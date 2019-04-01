@@ -1,7 +1,7 @@
 module RoutificApi
-  class Project < Attributable
+  class SimpleAttributable < Attributable
     def values
-      %i(id name date)
+      %i(name)
     end
 
     def object_values
@@ -9,7 +9,11 @@ module RoutificApi
     end
 
     def collections
-      %i(drivers stops settings)
+      []
+    end
+
+    def as_json
+      name
     end
   end
 end

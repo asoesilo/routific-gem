@@ -68,17 +68,20 @@ class Factory
   # Constants for attributable
   ATTRIBUTABLE_PARAMS = {
     "val_attr"        => "VALUE",
+    "obj_val_attr"    => OpenStruct.new,
     "collection_attr" => ["COLLECTION"]
   }
 
   ATTRIBUTABLE_PARAMS_INVALID_COLLECTION = {
     "val_attr"        => "VALUE",
+    "obj_val_attr"    => OpenStruct.new,
     "collection_attr" => "COLLECTION"
   }
 
   # Constants for jsonable
   JSONABLE_PARAMS = {
     "val_attr"        => "VALUE",
+    "obj_val_attr"    => OpenStruct.new(as_json: "OBJECT VALUE"),
     "collection_attr" => [OpenStruct.new(as_json: "COLLECTION")]
   }
 
