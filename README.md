@@ -177,3 +177,7 @@ It returns a job object with the following attibutes:
 - `created_at`, `finished_at`: creation and finish times
 - `input`: the data used for the request
 - `route`: a route object
+
+#### `routific.set_project( data )`
+
+Read the [platform documentation][https://routific-platform.readme.io/reference] for a full list of attributes.

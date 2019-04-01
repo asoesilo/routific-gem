@@ -6,6 +6,8 @@ require 'faker'
 require 'dotenv'
 Dotenv.load
 
+require 'byebug'
+
 require 'routific'
 
 require_relative './factory'

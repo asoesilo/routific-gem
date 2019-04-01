@@ -1,3 +1,4 @@
+require_relative './routific/jsonable'
 require_relative './routific/location'
 require_relative './routific/visit'
 require_relative './routific/break'
@@ -6,6 +7,8 @@ require_relative './routific/route'
 require_relative './routific/way_point'
 require_relative './routific/options'
 require_relative './routific/job'
+require_relative './routific/project'
+require_relative './routific/stop'
 
 require_relative './util'
 
