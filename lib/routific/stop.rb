@@ -1,11 +1,11 @@
 module RoutificApi
   class Stop
-    def initialize(params)
-
+    def values
+      %i(name location start end duration load priority phone_number email notes custom_notes)
     end
 
-    def as_json
-      'JSON'
+    def collections
+      %i(types)
     end
   end
 end

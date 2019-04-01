@@ -7,9 +7,5 @@ module RoutificApi
     def collections
       %i(drivers stops settings)
     end
-
-    def attrs
-      values + enums
-    end
   end
 end

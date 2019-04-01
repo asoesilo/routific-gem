@@ -1,14 +1,12 @@
 require_relative './helper/spec_helper'
-require_relative '../lib/util'
 
-describe RoutificApi::Attributable, focus: true do
+describe RoutificApi::Attributable do
   let(:subject) { AttributableSubclass.new(params) }
-  let(:params)  { Factory::JSONABLE_PARAMS }
+  let(:params)  { Factory::ATTRIBUTABLE_PARAMS }
 
   class AttributableSubclass < RoutificApi::Attributable
     def values; %i(val_attr); end
     def collections; %i(collection_attr); end
-    def attrs; values + collections; end
   end
 
   describe "instance variables" do
@@ -23,8 +21,8 @@ describe RoutificApi::Attributable, focus: true do
       end
     end
 
-    context "invalid collections", focus: true do
-      let(:params) { Factory::JSONABLE_PARAMS_INVALID_COLLECTION }
+    context "invalid collections" do
+      let(:params) { Factory::ATTRIBUTABLE_PARAMS_INVALID_COLLECTION }
 
       it "raises an error" do
         expect { subject }.to raise_error(NotArrayError)

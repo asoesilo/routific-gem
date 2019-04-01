@@ -65,31 +65,22 @@ class Factory
   }
   BREAK = RoutificApi::Break.new(BREAK_PARAMS)
 
-  # Constants for jsonable
-  JSONABLE_PARAMS = {
+  # Constants for attributable
+  ATTRIBUTABLE_PARAMS = {
     "val_attr"        => "VALUE",
     "collection_attr" => ["COLLECTION"]
   }
 
-  JSONABLE_PARAMS_INVALID_COLLECTION = {
+  ATTRIBUTABLE_PARAMS_INVALID_COLLECTION = {
     "val_attr"        => "VALUE",
     "collection_attr" => "COLLECTION"
   }
 
-  # Factory and constants for stop
-  # STOP_PARAMS = nil
-  # STOP = RoutificApi::Stop.new(STOP_PARAMS)
-  #
-  # # Factory and constants for project
-  # PROJECT_NAME = Faker::Lorem.word
-  # PROJECT_DATE = Date.today.strftime
-  # PROJECT_STOPS = [STOP]
-  # PROJECT_PARAMS = {
-  #   "name"  => PROJECT_NAME,
-  #   "date"  => PROJECT_DATE,
-  #   "stops" => PROJECT_STOPS
-  # }
-  # PROJECT = RoutificApi::Project.new(PROJECT_PARAMS)
+  # Constants for jsonable
+  JSONABLE_PARAMS = {
+    "val_attr"        => "VALUE",
+    "collection_attr" => [OpenStruct.new(as_json: "COLLECTION")]
+  }
 
   # Factory and constants for vehicle
   VEHICLE_ID = Faker::Lorem.word

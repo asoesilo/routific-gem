@@ -1,19 +1,18 @@
 module RoutificApi
   class Attributable
+    include RoutificApi::Jsonable
+
     ATTRS = %i(values collections)
     def initialize(params)
       ensure_attrs_set
       set_attrs(params)
     end
 
-    # def as_json
-    #   attrs.inject({}) do |json_data, attr|
-    #     set_json(json_data, attr)
-    #     json_data
-    #   end
-    # end
-
     private
+
+    def attrs
+      values + collections
+    end
 
     def ensure_attrs_set
       ATTRS.each do |attr|
@@ -55,22 +54,5 @@ module RoutificApi
     def set_variable(attr, value)
       self.send("#{ attr }=".to_sym, value)
     end
-
-    # def set_json(data, attr)
-    #   collections.include?(attr) ? set_collection_json(data, attr) : set_value_json(data, attr)
-    # end
-    #
-    # def set_value_json(data, attr)
-    #   data[attr.to_s] = add_attr_if_exists(attr)
-    # end
-    #
-    # def set_collection_json(data, attr)
-    #   data[attr.to_s] = self.send(attr)
-    #     .map(&:as_json)
-    # end
-
-    # def add_attr_if_exists(attr)
-    #   self.send(attr) if self.send(attr)
-    # end
   end
 end
