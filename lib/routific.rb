@@ -12,6 +12,7 @@ require_relative './routific/options'
 require_relative './routific/job'
 require_relative './routific/project'
 require_relative './routific/stop'
+require_relative './routific/project_factory'
 
 require_relative './util'
 
@@ -69,6 +70,11 @@ class Routific
     data[:options] = options if options
     result = Util.send_request("POST", "vrp-long", Routific.token, data)
     RoutificApi::Job.new(result["job_id"], data)
+  end
+
+  def set_project(data)
+    result = Util.send_request("POST", "project", Routific.token, data, true)
+    RoutificApi::ProjectFactory.new(result).call
   end
 
   class << self

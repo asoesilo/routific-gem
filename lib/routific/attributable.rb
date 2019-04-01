@@ -27,10 +27,10 @@ module RoutificApi
     end
 
     def set_attr(attr, value)
-      ensure_collection_is_array(attr, value)
       define_setter(attr, value)
       define_reader(attr)
       set_variable(attr, value)
+      ensure_collection_is_array(attr, value)
     end
 
     def ensure_collection_is_array(attr, value)

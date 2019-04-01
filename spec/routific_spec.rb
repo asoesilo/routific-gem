@@ -162,6 +162,15 @@ describe Routific do
         expect(job.route).to be_instance_of(RoutificApi::Route)
       end
     end
+
+    describe "#set_project" do
+      let(:result) { routific.set_project(data) }
+      let(:data) { Factory::PROJECT_DATA }
+
+      it "returns a Project instance" do
+        expect(result).to be_instance_of(RoutificApi::Project)
+      end
+    end
   end
 
   describe "class methods" do

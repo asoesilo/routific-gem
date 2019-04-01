@@ -5,11 +5,11 @@ module RoutificApi
     end
 
     def object_values
-      []
+      %i(settings)
     end
 
     def collections
-      %i(drivers stops settings)
+      %i(drivers stops)
     end
   end
 end
