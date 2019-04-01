@@ -9,3 +9,6 @@ routific-*.gem
 
 # Ignore gem locked versions
 Gemfile.lock
+
+# Ignore byebug history
+.byebug_history

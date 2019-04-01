@@ -1,10 +1,10 @@
 module RoutificApi
-  class Project < Jsonable
+  class Project < Attributable
     def values
       %i(id name date)
     end
 
-    def enums
+    def collections
       %i(drivers stops settings)
     end
 

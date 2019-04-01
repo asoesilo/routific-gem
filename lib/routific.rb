@@ -1,4 +1,6 @@
-require_relative './routific/jsonable'
+require_relative './errors/not_array_error'
+require_relative './errors/missing_attribute_error'
+require_relative './routific/attributable'
 require_relative './routific/location'
 require_relative './routific/visit'
 require_relative './routific/break'
