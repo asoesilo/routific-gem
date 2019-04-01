@@ -40,5 +40,20 @@ RSpec.describe Util do
         expect(result['key']).to eq("RESULT")
       end
     end
+
+    context "product API" do
+      let(:method) { "POST" }
+      let(:result) { subject.send_request(method, endpoint, nil, data, true ) }
+      let(:url)     { "#{ Util::PRODUCT_URL }#{ endpoint }" }
+
+      before do
+        expect(RestClient::Request).to receive(:execute).with(method: :post, url: url, payload: data.to_json, headers: headers)
+          .and_return(data.to_json)
+      end
+
+      it "passes the method to RestClient" do
+        expect(result['key']).to eq("RESULT")
+      end
+    end
   end
 end
