@@ -27,10 +27,10 @@ module Util
     JSON.parse(response)
   end
 
-  def self.request_params(method, url, token, data)
+  def self.request_params(method, url_val, token, data)
     {}.tap do |params|
       params[:method]  = method.downcase.to_sym
-      params[:url]     = url
+      params[:url]     = url_val
       params[:payload] = data.to_json unless data == nil
       params[:headers] = headers(token)
     end

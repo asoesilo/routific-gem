@@ -1,5 +1,5 @@
 module RoutificApi
-  class Stop
+  class Stop < Attributable
     def values
       %i(name start end duration load priority phone_number email notes)
     end
