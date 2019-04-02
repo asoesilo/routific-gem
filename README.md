@@ -180,4 +180,4 @@ It returns a job object with the following attibutes:
 
 #### `routific.set_project( data )`
 
-Read the [platform documentation][https://routific-platform.readme.io/reference] for a full list of attributes.
+Read the [platform documentation](https://routific-platform.readme.io/reference) for a full list of attributes.
