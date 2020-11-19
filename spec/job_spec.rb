@@ -1,5 +1,5 @@
 require_relative './helper/spec_helper'
-require_relative '../lib/util'
+require_relative '../lib/routific/util'
 
 describe RoutificApi::Job do
   describe "valid parameters" do
@@ -19,7 +19,7 @@ describe RoutificApi::Job do
 
     describe "fetch" do
       before do
-        allow(Util).to receive(:send_request) { Factory::JOB_PARAMS }
+        allow(RoutificApi::Util).to receive(:send_request) { Factory::JOB_PARAMS }
         job.fetch
       end
 

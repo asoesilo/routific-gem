@@ -6,8 +6,7 @@ require_relative './routific/route'
 require_relative './routific/way_point'
 require_relative './routific/options'
 require_relative './routific/job'
-
-require_relative './util'
+require_relative './routific/util'
 
 # Main class of this gem
 class Routific
@@ -50,7 +49,7 @@ class Routific
     }
 
     data[:options] = options if options
-    result = Util.send_request("POST", "vrp", Routific.token, data)
+    result = RoutificApi::Util.send_request("POST", "vrp", Routific.token, data)
     RoutificApi::Route.parse(result)
   end
 
@@ -61,7 +60,7 @@ class Routific
     }
 
     data[:options] = options if options
-    result = Util.send_request("POST", "vrp-long", Routific.token, data)
+    result = RoutificApi::Util.send_request("POST", "vrp-long", Routific.token, data)
     RoutificApi::Job.new(result["job_id"], data)
   end
 
@@ -70,7 +69,7 @@ class Routific
     def set_token(token)
       @@token = token
       validate_token
-      @@token = Util.prefix_token(@@token)
+      @@token = RoutificApi::Util.prefix_token(@@token)
     end
 
     def token

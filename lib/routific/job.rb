@@ -13,7 +13,7 @@ module RoutificApi
     end
 
     def fetch
-      job_data = Util.send_request("GET", "jobs/#{@id}")
+      job_data = RoutificApi::Util.send_request("GET", "jobs/#{@id}")
 
       FIELDS.each do |field|
         instance_variable_set "@#{field}", job_data[field.to_s]

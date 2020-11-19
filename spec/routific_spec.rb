@@ -1,5 +1,5 @@
 require_relative './helper/spec_helper'
-require_relative '../lib/util'
+require_relative '../lib/routific/util'
 
 describe Routific do
   describe "without token" do
@@ -20,7 +20,7 @@ describe Routific do
     end
 
     it "has token" do
-      expect(Routific.token).to eq(Util.prefix_token(ENV["API_KEY"]))
+      expect(Routific.token).to eq(RoutificApi::Util.prefix_token(ENV["API_KEY"]))
     end
 
     describe "#visits" do
