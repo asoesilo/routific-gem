@@ -52,7 +52,7 @@ class Factory
   VISIT_PARAMS_MULTIPLE_TYPE["type"] = MULTIPLE_TYPE
   VISIT_MULTIPLE_TYPE = RoutificApi::Visit.new(VISIT_ID, VISIT_PARAMS_MULTIPLE_TYPE)
 
-  # Factoru and constants for break
+  # Factory and constants for break
   BREAK_ID = Faker::Lorem.word
   BREAK_START = "12:00"
   BREAK_END = "12:30"
@@ -64,6 +64,26 @@ class Factory
     "in_transit" => BREAK_IN_TRANSIT
   }
   BREAK = RoutificApi::Break.new(BREAK_PARAMS)
+
+  # Constants for attributable
+  ATTRIBUTABLE_PARAMS = {
+    "val_attr"        => "VALUE",
+    "obj_val_attr"    => OpenStruct.new,
+    "collection_attr" => ["COLLECTION"]
+  }
+
+  ATTRIBUTABLE_PARAMS_INVALID_COLLECTION = {
+    "val_attr"        => "VALUE",
+    "obj_val_attr"    => OpenStruct.new,
+    "collection_attr" => "COLLECTION"
+  }
+
+  # Constants for jsonable
+  JSONABLE_PARAMS = {
+    "val_attr"        => "VALUE",
+    "obj_val_attr"    => OpenStruct.new(as_json: "OBJECT VALUE"),
+    "collection_attr" => [OpenStruct.new(as_json: "COLLECTION")]
+  }
 
   # Factory and constants for vehicle
   VEHICLE_ID = Faker::Lorem.word
@@ -193,4 +213,71 @@ class Factory
     "output" => ROUTE_PARAMS_STRING
   }
   JOB = RoutificApi::Job.new(JOB_ID, JOB_INPUT)
+
+  # Constants for ProjectFactory
+  PROJECT_ID   = Faker::Lorem.word
+  PROJECT_NAME = Faker::Lorem.word
+  DRIVER_NAME  = Faker::Lorem.word
+  PROJECT_DATA = {
+    "name" => PROJECT_NAME,
+    "date" => DateTime.now.strftime('%Y-%m-%d'),
+    "drivers" => [{
+      "name" => DRIVER_NAME,
+      "start_location" => {
+        "address" => "555 west hastings, vancouver bc, canada",
+        "coords" => {
+          "lat" => 49.2847001,
+          "lng" => -123.1141236
+        }
+      },
+      "end_location" => {
+        "address" => "555 west hastings, vancouver bc, canada",
+        "coords" => {
+          "lat" => 49.2847001,
+          "lng" => -123.1141236
+        }
+      },
+      "shift_start" => "09:00",
+      "shift_end" => "17:00",
+      "phone_number" => "+16042597686",
+      "speed" => 1,
+      "capacity" => 10,
+      "types" => ["a", "b"],
+      "break" => {
+        "start" => "12:00",
+      "end" => "13:00"
+      }
+    }],
+    "stops" => [{
+      "name" => "Jane Doe",
+      "location" => {
+        "address" => "2148 Main St, Vancouver, BC V5T 3C5",
+        "coords" => {
+          "lat" => 49.2657634,
+          "lng" => -123.1004459
+        }
+      },
+      "start" => "10:00",
+    "end" => "11:00",
+      "duration" => 20,
+      "types" => ["a"],
+      "load" => 1,
+      "priority" => true,
+      "phone_number" => "+16046204589",
+      "email" => "jane@doe.com",
+      "notes" => "Press 304 at buzzer.",
+      "custom_notes" => {}
+    }],
+    "settings" => {
+      "max_stop_lateness" => 320,
+      "max_driver_overtime" => 320,
+      "shortest_distance" => true,
+      "traffic" => 1.4,
+      "strict_start" => true,
+      "auto_balance" => true,
+      "default_load" => 1,
+      "default_duration" => 10
+    }
+  }
+  PROJECT_FACTORY_PARAMS = PROJECT_DATA.merge("id" => PROJECT_ID)
 end

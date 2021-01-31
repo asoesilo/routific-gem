@@ -1,3 +1,7 @@
+require_relative './errors/not_array_error'
+require_relative './errors/missing_attribute_error'
+require_relative './routific/jsonable'
+require_relative './routific/attributable'
 require_relative './routific/location'
 require_relative './routific/visit'
 require_relative './routific/break'
@@ -6,6 +10,17 @@ require_relative './routific/route'
 require_relative './routific/way_point'
 require_relative './routific/options'
 require_relative './routific/job'
+require_relative './routific/project'
+require_relative './routific/driver'
+require_relative './routific/stop'
+require_relative './routific/setting'
+require_relative './routific/project_location'
+require_relative './routific/factory_helper'
+require_relative './routific/project_factory'
+require_relative './routific/driver_factory'
+require_relative './routific/stop_factory'
+require_relative './routific/setting_factory'
+require_relative './routific/project_location_factory'
 
 require_relative './util'
 
@@ -63,6 +78,11 @@ class Routific
     data[:options] = options if options
     result = Util.send_request("POST", "vrp-long", Routific.token, data)
     RoutificApi::Job.new(result["job_id"], data)
+  end
+
+  def set_project(data)
+    result = Util.send_request("POST", "project", Routific.token, data, true)
+    RoutificApi::ProjectFactory.new(result).call
   end
 
   class << self

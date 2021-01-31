@@ -1,5 +1,5 @@
 module RoutificApi
-  # This class represents a job returned by vrp-long 
+  # This class represents a job returned by vrp-long
   class Job
     FIELDS = [:status, :created_at, :finished_at]
     attr_reader *FIELDS
